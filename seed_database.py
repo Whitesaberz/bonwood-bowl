@@ -6,8 +6,8 @@ import crud
 import model
 import server
 
-os.system("dropdb")
-os.system("createdb")
+os.system("dropdb reservations")
+os.system("createdb reservations")
 
 model.db_connect(server.app)
 model.db.create_all()

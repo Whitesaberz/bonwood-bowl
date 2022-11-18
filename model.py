@@ -1,10 +1,20 @@
 from flask_sqlalchemy import SQLAlchemy
-import os
 
 db = SQLAlchemy()
 
-def db_connect(flask_app, echo=True):
-    flask_app.config["SQLALCHEMY_DATABASE_URI"] = os.environ["POSTGRES_URI"]
+class User(db.Model):
+
+   __tablename__ = "users"
+
+   user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+   email = db.Column(db.String, unique=True)
+   password = db.Column(db.String)
+
+   def __repr__(self):
+      return f'<User user_id={self.user_id} email={self.email}>'
+
+def db_connect(flask_app, db_uri="postgresql:///reservations",echo=True):
+    flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
     flask_app.config["SQLALCHEMY_ECHO"] = echo
     flask_app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
