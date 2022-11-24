@@ -2,9 +2,9 @@
 
 from model import db, User, Lane, Reservation, Rental, db_connect
 
-def create_user(email, password):
+def create_user(email, password, last_name):
 
-    user = User(email=email, password=password)
+    user = User(email=email, password=password, last_name=last_name)
 
     return user
 
@@ -17,31 +17,26 @@ def get_user_by_id(user_id):
 def get_user_by_email(email):
     return User.query.filter(User.email == email).first()
 
-def create_lane(time, price_per_game):
-    lane = Lane(
-        time=time,
-        price_per_game=price_per_game
-    )
-    return lane
+def create_lane(price_per_game):
+    return Lane(price_per_game=price_per_game)
 
-def get_lanes():
-    return Lane.query.all()
+def get_reservations():
+    return Reservation.query.all()
 
-def get_lane_by_id(lane_id):
-    return Lane.query.get(lane_id)
+def get_reservation_by_id(reservation_id):
+    return Reservation.query.get(reservation_id)
 
-def create_reservation(user, lane, rental, time):
-    reservation = Reservation(user=user, lane=lane, rental=rental, time=time)
+def create_reservation(user: User, lane_id: int, time):
+    reservation = Reservation(user_id=user.user_id, lane_id=lane_id, time=time)
     return reservation
-
 
 def update_reservation(reservation_id, new_time):
     
     reservation = Reservation.query.get(reservation_id)
     reservation.time = new_time
     
-def create_rental(shoe_size, price, reservation):
-    rental = Rental(shoe_size, price, reservation)
+def create_rental(shoe_size, price, reservation_id: int):
+    rental = Rental(shoe_size=shoe_size, price=price, reservation_id=reservation_id)
     return rental
     
 

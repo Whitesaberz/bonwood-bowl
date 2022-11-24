@@ -1,4 +1,18 @@
 {% extends 'base.html' %}
 {% block body %}
 
+<h3>Reserve a lane!</h3>
+
+<form id=reservation_form action="/reservations">
+  <p> Select a time between 10 AM and 10 PM</p>
+  <label for="datetime">Date:</label>
+  <input type="datetime-local" id="datetime" min="2022-11-30T10:00" max="2022-11-30T22:00" required />
+  <span class="validity"></span>
+  <br><br>
+  <label for="rental">Need shoe rental?</label>
+  <input type="radio" id="rental">
+  <br><br>
+  <input type="submit" value="Submit">
+</form>
+
 {% endblock %}

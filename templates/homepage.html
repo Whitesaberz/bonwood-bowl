@@ -2,66 +2,42 @@
 {% block title %}Bonwood Bowl{% endblock %}
 {% block body %}
 <h1> Welcome to Bonwood Bowl! </h1>
+<br><br>
 
-<h3>Reserve a lane!</h3>
+<h2>Please Sign In</h2>
 
-<form id=reservation_form>
-  <label for="datetime">Date:</label>
-  <input type="datetime-local" id="datetime">
-  <br><br>
-  <label for="lanes">Choose a lane:</label>
-  <select name="lanes" id="lanes">
-    <option value="lane1">1</option>
-    <option value="lane2">2</option>
-    <option value="lane3">3</option>
-    <option value="lane4">4</option>
-    <option value="lane5">5</option>
-    <option value="lane6">6</option>
-    <option value="lane7">7</option>
-    <option value="lane8">8</option>
-    <option value="lane9">9</option>
-    <option value="lane10">10</option>
-    <option value="lane11">11</option>
-    <option value="lane12">12</option>
-    <option value="lane13">13</option>
-    <option value="lane14">14</option>
-    <option value="lane15">15</option>
-    <option value="lane16">16</option>
-    <option value="lane17">17</option>
-    <option value="lane18">18</option>
-    <option value="lane19">19</option>
-    <option value="lane20">20</option>
-    <option value="lane21">21</option>
-    <option value="lane22">22</option>
-    <option value="lane23">23</option>
-    <option value="lane24">24</option>
-    <option value="lane25">25</option>
-    <option value="lane26">26</option>
-    <option value="lane27">27</option>
-    <option value="lane28">28</option>
-    <option value="lane29">29</option>
-    <option value="lane30">30</option>
-    <option value="lane31">31</option>
-    <option value="lane32">32</option>
-    <option value="lane33">33</option>
-    <option value="lane34">34</option>
-    <option value="lane35">35</option>
-    <option value="lane36">36</option>
-    <option value="lane37">37</option>
-    <option value="lane38">38</option>
-    <option value="lane39">39</option>
-    <option value="lane40">40</option>
-    <option value="lane41">41</option>
-    <option value="lane42">42</option>
-  </select>
-  <br><br>
-  <label for="rental">Need shoe rental?</label>
-  <input type="radio" id="rental">
-  <br><br>
-  <label for="phone_number">Phone#:</label>
-  <input type="tel" id="phone_number">
-  <br><br>
-  <input type="submit" value="Submit">
+<h2>Log In</h2>
+  <form action="/login" method="POST">
+    <p>
+      Email <input type="text" name="email">
+    </p>
+
+    <p>
+      Password <input type="password" name="password">
+    </p>
+
+    <p>
+      <input type="submit">
+    </p>
+  </form>
+  
+<h2>Create an Account</h2>
+<form action="/users" method="POST">
+  <p>
+    Email <input type="text" name="email">
+  </p>
+
+  <p>
+    Password <input type="password" name="password">
+  </p>
+
+  <p>
+    Last Name <input type="text" name="last_name">
+  </p>
+
+  <p>
+    <input type="submit">
+  </p>
 </form>
 
 {% endblock %}
