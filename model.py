@@ -11,9 +11,10 @@ class User(db.Model):
    email = db.Column(db.String, unique=True)
    password = db.Column(db.String)
    last_name = db.Column(db.String)
-   
+
    def __repr__(self):
       return f'<User user_id={self.user_id} email={self.email}>'
+   
 
 
 class Lane(db.Model):
@@ -34,14 +35,15 @@ class Reservation(db.Model):
     lane_id = db.Column(db.Integer, db.ForeignKey("lanes.lane_id"), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
     time = db.Column(db.DateTime)
-    rental = db.Column(db.Boolean, default=False)
+    rental_choice = db.Column(db.Boolean)
+    party = db.Column(db.Integer)
 
     lane = db.relationship("Lane", backref="reservations")
     user = db.relationship("User", backref="reservations")
     rental = db.relationship("Rental", backref="reservations")
         
     def __repr__(self):
-        return f"<Reservation reservation_id={self.reservation_id} time={self.time}>"
+        return f"<Reservation reservation_id={self.reservation_id} lane_id={self.lane_id} time={self.time} >"
 
 
 class Rental(db.Model):

@@ -26,8 +26,8 @@ def get_reservations():
 def get_reservation_by_id(reservation_id):
     return Reservation.query.get(reservation_id)
 
-def create_reservation(user: User.user_id, lane_id: int, time):
-    reservation = Reservation(user_id=user, lane_id=lane_id, time=time)
+def create_reservation(user: User.user_id, lane_id: int, time, rental_choice, party):
+    reservation = Reservation(user_id=user, lane_id=lane_id, time=time, rental_choice=rental_choice, party=party)
     return reservation
 
 def update_reservation(reservation_id, new_time):

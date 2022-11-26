@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, flash, session, redirect
 from model import db_connect, db
 
-import crud, time, random
+import crud, datetime, random
 from jinja2 import StrictUndefined
 
 app = Flask(__name__)
@@ -43,6 +43,8 @@ def process_login():
 
     email = request.form.get("email")
     password = request.form.get("password")
+    print(email)
+    print(password)
 
     user = crud.get_user_by_email(email)
     if not user or user.password != password:
@@ -75,20 +77,25 @@ def reservations():
 def create_reservation():
     
     logged_in_email = session.get("user_email")
-    reservation_time = request.form.get("res_time")
-    # rental = request.form.get("rental")
-    
+    reservation_time = (request.form.get("reserve_time"))
+    rental = request.form.get("rental")
+    if rental:
+        rental = True
+    else:
+        rental = False
+    party_size = request.form.get("party_size")
+
     current_user = crud.get_user_by_email(logged_in_email)
     user = current_user.user_id
     lane_options=["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42"]
     lane = int(random.choice(lane_options))
 
-    reservation = crud.create_reservation(user, lane, reservation_time)
+    reservation = crud.create_reservation(user, lane, reservation_time, rental, party_size)
     db.session.add(reservation)
     db.session.commit()
     flash(f"You reserved lane {lane} for {reservation_time}")
 
-    return redirect("reservations.html")
+    return redirect("/reservations")
 
 @app.route("/cart")
 def cart_page():

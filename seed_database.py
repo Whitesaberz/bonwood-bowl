@@ -42,11 +42,12 @@ with server.app.app_context():
         model.db.session.add(user)
     
         for r in range(1):
-            # rental_needed = 1
+            group = randint(1, 20)
+            rental_choice = True
             random_lane = randint(1, 42)
             random_hour = randint(10, 22)
             new_date=datetime(2022, 11, 30, hour=random_hour)
-            reservation = crud.create_reservation(user, random_lane, new_date)
+            reservation = crud.create_reservation(user, random_lane, new_date, rental_choice, group)
         model.db.session.add(reservation)
     model.db.session.commit()
 
