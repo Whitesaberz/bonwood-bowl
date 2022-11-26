@@ -31,13 +31,15 @@ class Reservation(db.Model):
     __tablename__ = "reservations"
 
     reservation_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    lane_id = db.Column(db.Integer, db.ForeignKey("lanes.lane_id"))
-    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    lane_id = db.Column(db.Integer, db.ForeignKey("lanes.lane_id"), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
     time = db.Column(db.DateTime)
+    rental = db.Column(db.Boolean, default=False)
 
     lane = db.relationship("Lane", backref="reservations")
     user = db.relationship("User", backref="reservations")
-
+    rental = db.relationship("Rental", backref="reservations")
+        
     def __repr__(self):
         return f"<Reservation reservation_id={self.reservation_id} time={self.time}>"
 
@@ -51,7 +53,7 @@ class Rental(db.Model):
     price = db.Column(db.Float)
     reservation_id = db.Column(db.Integer, db.ForeignKey("reservations.reservation_id"))
     
-    reservation = db.relationship("Reservation", backref="reservations")
+    reservation = db.relationship("Reservation", backref="reservations", overlaps="rental,reservations")
 
     def __repr__(self):
         return f"<Rental rental_id={self.rental_id} shoe_size={self.shoe_size}"

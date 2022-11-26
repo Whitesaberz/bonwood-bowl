@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, flash, session, redirect
 from model import db_connect, db
-from form import LoginForm
+
 import crud, time, random
 from jinja2 import StrictUndefined
 
@@ -34,7 +34,11 @@ def user_info(user_id):
     user = crud.get_user_by_id(user_id)
     return render_template("user_details.html", user = user)
 
-@app.route("/login", methods=["POST"])
+@app.route("/login")
+def login_page():
+    return render_template("login.html")
+
+@app.route("/login/login_form", methods=["POST"])
 def process_login():
 
     email = request.form.get("email")
@@ -56,29 +60,40 @@ def logout():
    flash("Logged out.")
    return redirect("/")
 
-@app.route("/reservations", methods=["GET","POST"])
-def create_reservation():
+@app.route("/reservations")
+def reservations():
 
     logged_in_email = session.get("user_email")
-    reservation_time = request.form.get("reservation")
-
+    
     if logged_in_email is None:
         flash("You must log in to reserve a lane.")
-    elif not reservation_time:
-        flash("Error: you didn't select a time for your reservation.")
+        return redirect("/login")
     else:
-        user = crud.get_user_by_email(logged_in_email)
-        lane_options=["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42"]
-        lane = random.choice(int(lane_options))
+        return render_template("reservations.html")
+    
+@app.route("/reservations/create_reservation", methods=["GET", "POST"])
+def create_reservation():
+    
+    logged_in_email = session.get("user_email")
+    reservation_time = request.form.get("res_time")
+    # rental = request.form.get("rental")
+    
+    current_user = crud.get_user_by_email(logged_in_email)
+    user = current_user.user_id
+    lane_options=["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42"]
+    lane = int(random.choice(lane_options))
 
-        reservation = crud.create_reservation(user, lane, reservation_time)
-        db.session.add(reservation)
-        db.session.commit()
+    reservation = crud.create_reservation(user, lane, reservation_time)
+    db.session.add(reservation)
+    db.session.commit()
+    flash(f"You reserved lane {lane} for {reservation_time}")
 
-        flash(f"You reserved lane {lane} for {reservation_time}")
+    return redirect("reservations.html")
 
-        return redirect("/cart")
-
+@app.route("/cart")
+def cart_page():
+    return render_template("cart.html")
+    
 if __name__ == "__main__":
     db_connect(app)
     app.run(host="localhost", port = 5000, debug=True)

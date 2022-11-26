@@ -34,22 +34,22 @@ with server.app.app_context():
     model.db.session.commit()
 
     for n in range(10):
+
         email = f"user{n}@test.com"
         password = "test"
         last_name = "test"
-
         user = crud.create_user(email, password, last_name)
         model.db.session.add(user)
-
+    
         for r in range(1):
+            # rental_needed = 1
             random_lane = randint(1, 42)
             random_hour = randint(10, 22)
             new_date=datetime(2022, 11, 30, hour=random_hour)
-            # organized_time=datetime.strptime(str(new_date), "%Y-%m-%d %H:%M:%S")
-            # standard_time=organized_time.strftime("%Y-%m-%d %I:%M %p")
             reservation = crud.create_reservation(user, random_lane, new_date)
-            model.db.session.add(reservation)
+        model.db.session.add(reservation)
     model.db.session.commit()
+
             
     for l in range(4, 14):
         random_shoe_size = randint(4, 14)
