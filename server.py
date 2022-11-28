@@ -128,9 +128,15 @@ def cart():
         
     return render_template("cart.html", cart_reservation=cart_reservation, order_total=order_total)
 
-@app.route("/empty-cart")
+@app.route("/empty-cart", methods=["GET","DELETE"])
 def empty_cart():
-    
+    cart = session.get("cart", {})
+    for reservation_id, num_of_games in cart.items():
+        reservation = crud.get_reservation_by_id(reservation_id)
+
+    print(reservation)
+    db.session.delete(reservation)
+    db.session.commit()
     session["cart"] = {}
     flash("Reservation deleted.")
 
