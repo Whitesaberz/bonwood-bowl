@@ -1,27 +1,49 @@
 {% extends 'base.html' %}
 {% block body %}
+<div id="reservations-body" class="container">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <h3 class="p-3">Reserve a lane!</h3>
 
-<h3>Reserve a lane!</h3>
-
-<form id=reservation_form action="/reservations/create_reservation" method="POST">
-  <p> Select a time between 10 AM and 10 PM</p>
-  <label for="res_time">Date:</label>
-    <input type="datetime-local" name = "reserve_time" id="rezzy_time" min="2022-11-30T10:00" max="2022-11-30T22:00" value="2022-11-30T10:00" required />
-      <span class="validity"></span>
-  <br><br>
-  <label for="rental">Need shoe rental?</label>
-    <input name="rental" type="checkbox" id="rental">
-  <br><br>
-  <label for="party_size"></label>
-    <select name="party_size" id="party_size">
-      <option value="">How many bowlers?</option>
-      {% for num in range(1, 20) %}
-        <option value="{{ num }}">{{ num }}</option>
-      {% endfor %}
-    </select>
-  <p>* Groups of 20+ will need to call the front desk for availability.</p>
-  <br>
-  <input type="submit" value="Submit">
-</form>
-
+        <form class= "p-4" id=reservation_form action="/reservations/create_reservation" method="POST">
+          <div class="mb-3">
+            <p> Select a time between 10 AM and 10 PM</p>
+            <label for="res_time" class="form-label">Date:</label>
+              <input type="datetime-local" name = "reserve_time" id="rezzy_time" min="2022-11-30T10:00" max="2022-11-30T22:00" value="2022-11-30T10:00" required />
+                <span class="validity"></span>
+            <br><br>
+            <label for="rental" class="form-label">Need shoe rental?</label>
+              <input name="rental" class="form-check-input" type="checkbox" id="rental">
+            <br><br>
+            <label for="party_size" class="form-label">How many bowlers?</label>
+              <select name="party_size" id="party_size">
+                <option value=""></option>
+                {% for num in range(1, 20) %}
+                  <option value="{{ num }}">{{ num }}</option>
+                {% endfor %}
+              </select>
+              <br>
+              <p>* Groups of 20+ will need to call the front desk for availability.</p>
+              <br>
+            <label for="num_of_games" class="form-label">How many games?</label>
+              <select name="num_of_games" id="num_of_games">
+                <option value=""></option>
+                {% for num in range(1, 7) %}
+                  <option value="{{ num }}">{{ num }}</option>
+                {% endfor %}
+              </select>
+              <p>(A typical series is 3 games.)</p>
+              <br>
+              <p> *For more than 6 games, front desk will use discretion for availability.</p>
+              <br>
+            <button type="submit" class="btn btn-primary" value="Submit">Submit</button>
+          </div>
+        </form>
+      </div>
+      <div class="col-sm-6">
+        <img class="p-4" src="https://images.unsplash.com/photo-1645534730335-75ff8b548527?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" alt="">
+      </div>
+    </div>
+</div>
 {% endblock %}

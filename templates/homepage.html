@@ -1,7 +1,61 @@
 {% extends 'base.html' %}
 {% block title %}Bonwood Bowl{% endblock %}
 {% block body %}
-<h1> Welcome to Bonwood Bowl! </h1>
-<br><br>
-
+<div id="homepage-body" class="container"></div>
+    <div class="loader-container">
+        <div class="loader">
+        <div class="ball-gradient"></div>
+        <div class="ball">
+            <div class="hole"></div>
+            <div class="hole"></div>
+            <div class="hole"></div>
+        </div>
+        </div>
+        <div class="shadow"></div>
+        <div class="loader-text">
+            <h1>Welcome to Bonwood Bowl!</h1>
+        </div>
+    </div>
+    <br>
+    <h2 id=homepage-h2 class="container mx-auto">Feel free to make a reservation by selecting it in the navigation bar!</h2>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-7">
+                <img class="container-lg" id=homepage-img src="https://images.unsplash.com/photo-1514313122851-5167c4fca5d6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2574&q=80" alt="bowling-reciever.img">
+            </div>
+            <div class="col-sm-5">
+                <div class="p-3 border border-danger bg-light">
+                <h3>Open Play Specials</h3>
+                <br>
+                <h4> Sundays </h4>
+                <p> $1.50 per game / $1.50 shoe rental (9:00 am to 11:30 am) </p>
+                <h4> Multiple Game Specials </h4>
+                <br>
+                <h5> Sundays after 11:30 AM </h5>
+                <p> $7.00 = 2 games including shoes </p>
+                <p> $9.00 = 3 games including shoes </p>
+                <h5> Monday through Thursday </h5>
+                <p> $7.00 = 2 games including shoes </p>
+                <p> $9.00 = 3 games including shoes </p>
+                <h5> Friday and Saturday </h5> 
+                <p> $10.00 = 2 games including shoes </p>
+                <p> $12.00 = 3 games including shoes </p>
+                <h6> *Open Play Specials not valid on holidays </h6>
+                </div>
+                <br>
+                <div class="p-3 border border-danger bg-light">
+                <h3>Hours</h3>
+                <p>Mon – 9:00 AM to 12:00 AM</p>
+                <p>Tue – 9:00 AM to 12:00 AM</p>
+                <p>Wed – 9:00 AM to 12:00 AM</p>
+                <p>Thu – 9:00 AM to 12:00 AM</p>
+                <p>Fri – 9:00 AM to 1:00 AM</p>
+                <p>Sat – 9:00 AM to 1:00 AM</p>
+                <p>Sun – 9:00 AM to 12:00 AM</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
