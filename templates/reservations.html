@@ -8,14 +8,15 @@
 
         <form class= "p-4" id=reservation_form action="/reservations/create_reservation" method="POST">
           <div class="mb-3">
-            <p> Select a time between 10 AM and 10 PM</p>
+            <p> Select a time between 9 AM and 10 PM</p>
             <label for="res_time" class="form-label">Date:</label>
-              <input type="datetime-local" name = "reserve_time" id="rezzy_time" min="2022-11-30T10:00" max="2022-11-30T22:00" value="2022-11-30T10:00" required />
+              <input type="datetime-local" name = "reserve_time" id="rezzy_time" min="2022-11-30T9:00" max="2022-11-30T22:00" value="2022-11-30T10:00" required />
                 <span class="validity"></span>
             <br><br>
             <label for="rental" class="form-label">Need shoe rental?</label>
               <input name="rental" class="form-check-input" type="checkbox" id="rental">
-            <br><br>
+              <p>*For 2 games or more, shoes are included.</p>
+            <br>
             <label for="party_size" class="form-label">How many bowlers?</label>
               <select name="party_size" id="party_size">
                 <option value=""></option>

@@ -34,7 +34,7 @@ with server.app.app_context():
             random_lane = randint(1, 43)
             random_hour = randint(10, 23)
             new_date=datetime(2022, 11, 30, hour=random_hour)
+            
             reservation = crud.create_reservation(user.user_id, random_lane, new_date, rental_choice, group, game_count)
-        model.db.session.add(reservation)
-
-    model.db.session.commit()
+            model.db.session.add(reservation)
+            model.db.session.commit()

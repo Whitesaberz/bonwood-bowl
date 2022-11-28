@@ -8,9 +8,6 @@ def create_user(email, password, last_name):
 
     return user
 
-def get_all_users():
-    return User.query.all()
-
 def get_user_by_id(user_id):
     return User.query.filter(User.user_id == user_id).first()
 
@@ -27,8 +24,7 @@ def get_reservation_by_id(reservation_id):
     return Reservation.query.get(reservation_id)
 
 def create_reservation(user_id, lane_id: int, time, rental_choice, party, num_of_games):
-    reservation = Reservation(user_id=user_id, lane_id=lane_id, time=time, rental_choice=rental_choice, party=party, num_of_games=num_of_games)
-    return reservation
+    return Reservation(user_id=user_id, lane_id=lane_id, time=time, rental_choice=rental_choice, party=party, num_of_games=num_of_games)
 
 def update_reservation(reservation_id, new_time):
     

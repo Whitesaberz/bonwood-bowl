@@ -3,6 +3,40 @@
 {% block body %}
 <h1> Checkout </h1>
 <br><br>
+  <div class="container border border-dark">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Time</th>
+          <th scope="col">Lane</th>
+          <th scope="col">Rental</th>
+          <th scope="col">Party Size</th>
+          <th scope="col">Number of Games</th>
+          <th scope="col">Total</th>
+          <th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for reservation in cart_reservation %}
+        <tr>
+          <td>{{ reservation.time }}</td>
+          <td>{{ reservation.lane_id }}</td>
+          <td>{{ reservation.rental_choice }}</td>
+          <td>{{ reservation.party }}</td>
+          <td>{{ reservation.num_of_games }}</td>
+          <td>${{ "%0.2f" | format(reservation.total_cost) }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <br>
+    <button id="confirm-cart-btn" type="button" class="btn btn-outline-primary">
+      <a href="/confirm-cart" class="confirm-cart">Confirm Reservation</a></th>
+    </button>
+    <button id="empty-cart-btn" type="button" class="btn btn-outline-warning">
+      <a href="/empty-cart" class="empty-cart">Delete Reservation</a></th>
+    </button>
+  </div>
 <br><br>
   <div class="lane">
     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -25,8 +59,22 @@
       c-1.176,0-2.182,0.417-3.016,1.252C46.33,21.286,45.914,22.291,45.914,23.466z"/>
   </g>
   </svg>
-  
-  
   </div>
-</div>
+  <div id="reservations-body" class="container-fluid">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6">
+          <img id="bonwood-cafe-img" src="https://images.unsplash.com/photo-1457460866886-40ef8d4b42a0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" alt="">
+          <div class="container border border-danger">
+            Whether you are in the mood for a burger and fries while aiming for your 300 game or craving a pizza or hot wings while knocking down a few pins with your friends – Bonwood has you covered. The Bonwood Cafe; located inside Bonwood Bowling Alley; has a wide range of food options to choose from. Catering for parties and special events is also available.  
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <img class="p-4" src="https://pbxd6d.p3cdn1.secureserver.net/wp-content/uploads/2017/01/competitive_edge22.png" alt="">
+          <div class="container border border-danger">Bonwood Bowl partners with Competitive Edge Pro Shop to meet the needs of our bowlers.  Competitive Edge Pro Shop offers competitive pricing on all bowling equipment and services. We are here to make your bowling experience the best it can be. We offer a wide range of services and we are here to meet your bowling needs.
+            <p>Contact Competitive Edge Pro Shop by calling 801-487-7758 (extension 4).</p>
+          </div>
+        </div>
+      </div>
+  </div>
 {% endblock %}

@@ -1,5 +1,4 @@
 from flask_sqlalchemy import SQLAlchemy
-import datetime
 
 db = SQLAlchemy()
 
@@ -20,7 +19,6 @@ class User(db.Model):
    def __repr__(self):
        return f"{self.user_id}"
    
-
 
 class Lane(db.Model):
 
@@ -59,7 +57,7 @@ class Reservation(db.Model):
         self.num_of_games = num_of_games
         
     def __repr__(self):
-        return f"<Reservation reservation_id={self.reservation_id} lane_id={self.lane_id} time={self.time} >"
+        return f"<Reservation reservation_id={self.reservation_id} lane_id={self.lane_id} time={self.time} rental_choice={self.rental_choice} party={self.party} num_of_games={self.num_of_games} >"
 
 
 def db_connect(flask_app, db_uri="postgresql:///reservations",echo=True):

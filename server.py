@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, flash, session, redirect
 from model import db_connect, db
-
-import crud, datetime, random
+from datetime import datetime
+import crud, random
 from jinja2 import StrictUndefined
 
 app = Flask(__name__)
@@ -31,7 +31,7 @@ def register_user():
         db.session.commit()
         flash("User account created, please log in.","success")
         
-        return redirect('/')
+        return redirect('/login')
 
 @app.route("/login")
 def login_page():
@@ -75,7 +75,7 @@ def reservations():
     
 @app.route("/reservations/create_reservation", methods=["GET", "POST"])
 def create_reservation():
-    
+        
     logged_in_email = session.get("user_email")
     reservation_time = (request.form.get("reserve_time"))
     rental = request.form.get("rental")
@@ -83,8 +83,8 @@ def create_reservation():
         rental = True
     else:
         rental = False
-    party_size = request.form.get("party_size")
-    num_of_games = request.form.get("num_of_games")
+    party_size = int(request.form.get("party_size"))
+    num_of_games = int(request.form.get("num_of_games"))
 
     current_user = crud.get_user_by_email(logged_in_email)
     user = current_user.user_id
@@ -92,20 +92,41 @@ def create_reservation():
     lane = int(random.choice(lane_options))
 
     reservation = crud.create_reservation(user, lane, reservation_time, rental, party_size, num_of_games)
-    new_reservation = reservation.reservation_id
-    if 'cart' not in session:
-        session['cart'] = {}
-    cart = session['cart']
+    db.session.add(reservation)
+    db.session.commit()
     
-    cart[new_reservation] = cart.get(new_reservation)
+    flash(f"Reservation created, please confirm in cart.", "success")
+    session["cart"] = {}
+    cart = session["cart"]
+    cart[reservation.reservation_id] = cart.get(reservation.reservation_id, reservation.num_of_games)
     session.modified = True
-    flash(f"Reservation created for {reservation_time}, please commit in cart.", "success")
-    print(new_reservation)
+    
     return redirect("/cart")
 
 @app.route("/cart")
-def cart_page():
-    return render_template("cart.html")
+def cart():
+    
+    logged_in_email = session.get("user_email")
+    
+    if logged_in_email is None:
+        flash("You must log in to reserve a lane.", "error")
+        return redirect("/login")
+    
+    order_total = 0
+    cart_reservation = []
+    cart = session.get("cart", {})
+    
+    for reservation_id, num_of_games in cart.items():
+        reservation = crud.get_reservation_by_id(reservation_id)
+        
+        total_cost = reservation.num_of_games * 3.00
+        order_total += total_cost
+
+        reservation.total_cost = total_cost
+        
+        cart_reservation.append(reservation)
+        
+    return render_template("cart.html", cart_reservation=cart_reservation, order_total=order_total)
 
 @app.route("/empty-cart")
 def empty_cart():
@@ -114,6 +135,10 @@ def empty_cart():
     flash("Reservation deleted.")
 
     return redirect("/cart")
+@app.route("/confirm-cart")
+def confirm_cart():
+    flash("Thank you so much, we're excited to see you then!", "success")
+    return redirect("/")
     
 if __name__ == "__main__":
     db_connect(app)

@@ -17,6 +17,18 @@ html, body {
     color: white;
 }
 
+#empty-cart-btn {
+    justify-content: right;
+}
+
+#cart_bowling_img {
+justify-content: center;
+}
+
+#bonwood-cafe-img{
+  max-height: 30%;
+}
+
 #homepage-h2 {
     text-align: center;
 }
@@ -27,7 +39,7 @@ html, body {
 }
 #footer {
     position: fixed;
-    height: 100px;
+    height: 30px;
     left: 0px;
     bottom: 0px;
     width: 100%;
